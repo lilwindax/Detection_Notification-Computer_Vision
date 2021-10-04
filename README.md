@@ -8,3 +8,6 @@ There are two approaches taken in this project:
 
   - Twilio API (Whatsapp Notification)
   - Email API (Email Notification)
+
+
+With the Email Notification approach you are also able to capture an image of the detected object and attach it to Email. 
