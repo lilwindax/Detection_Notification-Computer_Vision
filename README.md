@@ -1,4 +1,4 @@
-# DetectionNotificaiton-ComputerVision
+# DetectionNotification-ComputerVision
 
 This project is aimed at creating a system that is able to notifiy an individual once a certain object or person has been detected. 
 
