@@ -1,3 +1,4 @@
+# Import Libraries 
 import cv2  # Open CV Libary
 import mediapipe as mp # Mediapipe lib by google for cloud based ML applications
 import time # Time lib - used to display the frame rates
