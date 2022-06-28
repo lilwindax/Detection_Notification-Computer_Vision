@@ -1,13 +1,17 @@
-import cv2
-import os
-import time
+# Import Libraries 
+import cv2 # Open CV Library 
+import os # Operating System functions 
+import time # Time states 
+
+# Email API libraries 
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
-#############################################
-frameWidth = 640
+
+# Project configurations 
+frameWidth = 640 
 frameHeight = 480
 FaceCascade = cv2.CascadeClassifier("Resources/haarcascades/haarcascade_frontalface_default.xml")
 minArea = 500
@@ -19,26 +23,31 @@ saveData = True
 count = 0
 countSave = 0
 moduleVal = 10
+
+# Email details 
 email_user = 'email_user@gmail.com'
 email_password = 'password'
 email_send = 'email_send@gmail.com'
 subject = 'Person detected notification'
-##############################################
+
+# Function to save data
 def saveDataFunc():
     global countFolder
     countFolder = 0
     while os.path.exists(myPath + str(countFolder)):
         countFolder = countFolder + 1
     os.makedirs(myPath + str(countFolder))
-##############################################
+
+# Initialize Email API 
 msg = MIMEMultipart()
 msg['From'] = email_user
 msg['To'] = email_send
 msg['Subject'] = subject
 body = 'Hi there, there is a person detected. A photo image of the person is attacthed below.'
 msg.attach(MIMEText(body,'plain'))
-##############################################
 
+
+# Run Webcam to detect Faces 
 if saveData:saveDataFunc()
 
 cap = cv2.VideoCapture(0)
@@ -55,6 +64,8 @@ while True:
     numberPlates = FaceCascade.detectMultiScale(imgGray, 1.1, 10)
     for (x, y, w, h) in numberPlates:
         area = w * h
+        
+        # Create bounding boxes around face 
         if area > minArea:
             cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
             cv2.putText(img, "Detection Successful", (x, y - 5), cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, color, 2)
@@ -67,7 +78,8 @@ while True:
             if i == 1:  # If more then one person is to be detected then the statement can be changed to || i == 2......
                 #  i=i+1
                 if (area > minArea):
-
+                    
+                    # Save the detected face to local storage 
                     if saveData:
                         blur = cv2.Laplacian(img, cv2.CV_64F).var()
                         if count % moduleVal == 0 and blur > minBlur:
@@ -81,7 +93,8 @@ while True:
 
                             filename = path
                             attachment = open(filename, 'rb')
-
+                            
+                            # Send email notification 
                             part = MIMEBase('application', 'octet-stream')
                             part.set_payload((attachment).read())
                             encoders.encode_base64(part)
