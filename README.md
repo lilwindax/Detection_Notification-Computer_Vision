@@ -10,7 +10,7 @@ An example of this is Reception Desks. Receptionists have alot on their plates, 
 ## Approaches
 There are two approaches taken in this project: 
 
-  - Twilio API (Whatsapp Notification)
+  - Twilio API (Whatsapp Notification) 
   - Email API (Email Notification)
 
 ## Extra Functionality 
